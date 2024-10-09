@@ -20,10 +20,9 @@ public class Lluvia {
     private Music rainMusic;
     private float hitboxSize = 30; // Cambia el tamaño de la hitbox y de la imagen
 
-    public Lluvia(Texture gotaBuena, Texture gotaMala, Sound dropSound, Music rainMusic) {
+    public Lluvia(Texture gotaBuena, Texture gotaMala, Music rainMusic) {
         this.gotaBuena = gotaBuena;
         this.gotaMala = gotaMala;
-        this.dropSound = dropSound;
         this.rainMusic = rainMusic;
         rainDrops = new Array<>();
         rainDropsPos = new Array<>();
@@ -46,7 +45,7 @@ public class Lluvia {
         if (MathUtils.random(1, 10) < 3) {
             rainDrops.add(new GotaMala(gotaMala, hitboxSize));
         } else {
-            rainDrops.add(new GotaBuena(gotaBuena, hitboxSize, dropSound));
+            rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));
         }
 
         lastDropTime = TimeUtils.nanoTime();
@@ -82,7 +81,6 @@ public class Lluvia {
     }
 
     public void destruir() {
-        dropSound.dispose();
         rainMusic.dispose();
     }
 }

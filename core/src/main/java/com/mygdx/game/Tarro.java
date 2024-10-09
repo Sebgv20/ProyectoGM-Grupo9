@@ -1,7 +1,6 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,7 +11,6 @@ public class Tarro {
 	   private Texture bucketImage;
 	   private Texture bucketLeftImage;
 	   private Texture bucketRightImage;
-	   private Sound sonidoHerido;
 	   private int vidas = 3;
 	   private int puntos = 0;
 	   private int velx = 400;
@@ -20,11 +18,10 @@ public class Tarro {
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
 	   
-	   public Tarro(Texture texLeft, Texture texRight, Sound ss) {
+	   public Tarro(Texture texLeft, Texture texRight) {
 	       bucketLeftImage = texLeft;
 	       bucketRightImage = texRight;
 	       bucketImage = bucketRightImage; // Inicia mirando a la derecha
-	       sonidoHerido = ss;
 	   }
 	   
 	   public int getVidas() {
@@ -59,7 +56,6 @@ public class Tarro {
 	      vidas--;
 	      herido = true;
 	      tiempoHerido = tiempoHeridoMax;
-	      sonidoHerido.play();
 	   }
 
 	   public void dibujar(SpriteBatch batch) {

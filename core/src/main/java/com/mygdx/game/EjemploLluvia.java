@@ -3,7 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,17 +25,15 @@ public class EjemploLluvia extends ApplicationAdapter {
         font = new BitmapFont(); // Usa la fuente Arial predeterminada de libGDX
 		 
         // Cargar las texturas para el tarro y el sonido
-        Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
         bucketLeftImage = new Texture(Gdx.files.internal("bucketIzq2.png"));
         bucketRightImage = new Texture(Gdx.files.internal("bucketDer2.png"));
-        tarro = new Tarro(bucketLeftImage, bucketRightImage, hurtSound);
+        tarro = new Tarro(bucketLeftImage, bucketRightImage);
         
         // Cargar las texturas de las gotas y el sonido/música de fondo
         Texture gotaBuena = new Texture(Gdx.files.internal("drop.png"));
         Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
-        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        lluvia = new Lluvia(gotaBuena, gotaMala, dropSound, rainMusic);
+        lluvia = new Lluvia(gotaBuena, gotaMala, rainMusic);
 		
         // Configuración de la cámara
         camera = new OrthographicCamera();
