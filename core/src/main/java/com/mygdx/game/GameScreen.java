@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class EjemploLluvia extends ApplicationAdapter {
+public class GameScreen extends ApplicationAdapter {
     private OrthographicCamera camera;
     private SpriteBatch batch;	   
     private BitmapFont font;
@@ -32,8 +32,9 @@ public class EjemploLluvia extends ApplicationAdapter {
         // Cargar las texturas de las gotas y el sonido/música de fondo
         Texture gotaBuena = new Texture(Gdx.files.internal("drop.png"));
         Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+        Texture gotaSuper = new Texture(Gdx.files.internal("dropSuper.png"));
         Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        lluvia = new Lluvia(gotaBuena, gotaMala, rainMusic);
+        lluvia = new Lluvia(gotaBuena, gotaMala, gotaSuper, rainMusic);
 		
         // Configuración de la cámara
         camera = new OrthographicCamera();

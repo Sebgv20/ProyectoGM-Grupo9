@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,13 +15,14 @@ public class Lluvia {
     private long lastDropTime;
     private Texture gotaBuena;
     private Texture gotaMala;
-    private Sound dropSound;
+    private Texture gotaSuper;
     private Music rainMusic;
     private float hitboxSize = 30; // Cambia el tamaño de la hitbox y de la imagen
 
-    public Lluvia(Texture gotaBuena, Texture gotaMala, Music rainMusic) {
+    public Lluvia(Texture gotaBuena, Texture gotaMala, Texture gotaSuper, Music rainMusic) {
         this.gotaBuena = gotaBuena;
         this.gotaMala = gotaMala;
+        this.gotaSuper = gotaSuper;
         this.rainMusic = rainMusic;
         rainDrops = new Array<>();
         rainDropsPos = new Array<>();
@@ -42,12 +42,9 @@ public class Lluvia {
         raindrop.height = hitboxSize;
         rainDropsPos.add(raindrop);
         
-        if (MathUtils.random(1, 10) < 3) {
-            rainDrops.add(new GotaMala(gotaMala, hitboxSize));
-        } else {
-            rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));
-        }
-
+        if (MathUtils.random(10, 100) < 20) {	rainDrops.add(new GotaMala(gotaMala, hitboxSize));} 
+        else if (MathUtils.random(1, 10) <= 3){	rainDrops.add(new GotaSuper(gotaSuper, hitboxSize));}
+        else {	rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));}
         lastDropTime = TimeUtils.nanoTime();
     }
 
