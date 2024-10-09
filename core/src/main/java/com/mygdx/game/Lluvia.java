@@ -41,10 +41,15 @@ public class Lluvia {
         raindrop.width = hitboxSize;
         raindrop.height = hitboxSize;
         rainDropsPos.add(raindrop);
-        
-        if (MathUtils.random(10, 100) <= 20) {	rainDrops.add(new GotaMala(gotaMala, hitboxSize));} 
-        else if (MathUtils.random(1, 10) < 2){	rainDrops.add(new GotaSuper(gotaSuper, hitboxSize));}
-        else {	rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));}
+
+
+        if (MathUtils.random(10, 100) <= 25) {
+            rainDrops.add(new GotaMala(gotaMala, hitboxSize)); 
+        } else if (MathUtils.random(1, 10) < 2) {
+            rainDrops.add(new GotaSuper(gotaSuper, hitboxSize));
+        } else {
+            rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));
+        }
         lastDropTime = TimeUtils.nanoTime();
     }
 
@@ -53,7 +58,10 @@ public class Lluvia {
         
         for (int i = 0; i < rainDropsPos.size; i++) {
             Rectangle raindrop = rainDropsPos.get(i);
-            raindrop.y -= 300 * Gdx.graphics.getDeltaTime();
+            Gota gota = rainDrops.get(i);
+
+            // Usar la velocidad específica de cada gota
+            raindrop.y -= gota.getVelocidad() * Gdx.graphics.getDeltaTime();
             
             if (raindrop.y + 64 < 0) {
                 rainDropsPos.removeIndex(i);
@@ -62,7 +70,7 @@ public class Lluvia {
             }
 
             if (raindrop.overlaps(tarro.getArea())) {
-                rainDrops.get(i).aplicarEfecto(tarro);
+                gota.aplicarEfecto(tarro);
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
             }

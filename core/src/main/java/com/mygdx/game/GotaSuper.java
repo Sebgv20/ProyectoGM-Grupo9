@@ -12,6 +12,12 @@ public class GotaSuper extends Gota {
         super(textura, hitboxSize);
     }
 
+    
+    public float setVelocidad() {
+        // Velocidad fija para GotaBuena
+        return 500;
+    }
+    
     @Override
     public void aplicarEfecto(Tarro tarro) {
         tarro.sumarPuntos(30);

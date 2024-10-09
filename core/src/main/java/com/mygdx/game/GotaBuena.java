@@ -11,6 +11,11 @@ public class GotaBuena extends Gota {
     public GotaBuena(Texture textura, float hitboxSize) {
         super(textura, hitboxSize);
     }
+    
+    public float setVelocidad() {
+        // Velocidad fija para GotaBuena
+        return 200;
+    }
 
     @Override
     public void aplicarEfecto(Tarro tarro) {
