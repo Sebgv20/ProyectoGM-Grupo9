@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GotaSuper extends Gota {
-	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("superDrop.wav"));
 
     public GotaSuper(Texture textura, float hitboxSize) {
         super(textura, hitboxSize);
@@ -14,7 +14,7 @@ public class GotaSuper extends Gota {
 
     @Override
     public void aplicarEfecto(Tarro tarro) {
-        tarro.sumarPuntos(100);
+        tarro.sumarPuntos(30);
         dropSound.play();
     }
 }

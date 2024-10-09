@@ -33,7 +33,7 @@ public class GameScreen extends ApplicationAdapter {
         Texture gotaBuena = new Texture(Gdx.files.internal("drop.png"));
         Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
         Texture gotaSuper = new Texture(Gdx.files.internal("dropSuper.png"));
-        Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
         lluvia = new Lluvia(gotaBuena, gotaMala, gotaSuper, rainMusic);
 		
         // Configuración de la cámara

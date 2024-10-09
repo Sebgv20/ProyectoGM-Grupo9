@@ -42,8 +42,8 @@ public class Lluvia {
         raindrop.height = hitboxSize;
         rainDropsPos.add(raindrop);
         
-        if (MathUtils.random(10, 100) < 20) {	rainDrops.add(new GotaMala(gotaMala, hitboxSize));} 
-        else if (MathUtils.random(1, 10) <= 3){	rainDrops.add(new GotaSuper(gotaSuper, hitboxSize));}
+        if (MathUtils.random(10, 100) <= 20) {	rainDrops.add(new GotaMala(gotaMala, hitboxSize));} 
+        else if (MathUtils.random(1, 10) < 2){	rainDrops.add(new GotaSuper(gotaSuper, hitboxSize));}
         else {	rainDrops.add(new GotaBuena(gotaBuena, hitboxSize));}
         lastDropTime = TimeUtils.nanoTime();
     }
