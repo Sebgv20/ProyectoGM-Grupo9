@@ -94,5 +94,11 @@ public class Tarro {
 	   public boolean estaHerido() {
 	       return herido;
 	   }
+	   
+	   public void reiniciar() {
+	        this.puntos = 0; // Restablecer puntos
+	        this.vidas = 3;  // Restablecer vidas
+	        // Restablecer otras propiedades si es necesario
+	    }
 	}
 

@@ -53,7 +53,8 @@ public class Lluvia {
         lastDropTime = TimeUtils.nanoTime();
     }
 
-    public void actualizarMovimiento(Tarro tarro) {
+    public void actualizarMovimiento(Tarro tarro, GameLluviaMenu game) {
+        // Crear gotas de lluvia a intervalos
         if (TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
         
         for (int i = 0; i < rainDropsPos.size; i++) {
@@ -63,17 +64,20 @@ public class Lluvia {
             // Usar la velocidad específica de cada gota
             raindrop.y -= gota.getVelocidad() * Gdx.graphics.getDeltaTime();
             
+            // Si la gota sale de la pantalla, elimínala
             if (raindrop.y + 64 < 0) {
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
                 continue;
             }
 
+            // Verificar si colisiona con el tarro
             if (raindrop.overlaps(tarro.getArea())) {
-                gota.aplicarEfecto(tarro);
+                gota.aplicarEfecto(tarro);  // Aplicar el efecto (dañar o sumar puntos)
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
             }
+
         }
     }
 
@@ -89,4 +93,3 @@ public class Lluvia {
         rainMusic.dispose();
     }
 }
-

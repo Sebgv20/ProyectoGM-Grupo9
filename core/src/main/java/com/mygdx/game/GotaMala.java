@@ -21,10 +21,10 @@ public class GotaMala extends Gota {
     public void aplicarEfecto(Tarro tarro) {
         tarro.dañar();
         dropSound.play();
-        if (tarro.getPuntos() <= 30) {
+        if (tarro.getPuntos() <= 50) {
             tarro.restarPuntos(tarro.getPuntos());
         } else {
-            tarro.restarPuntos(30);
+            tarro.restarPuntos(50);
         }
     }
 }
