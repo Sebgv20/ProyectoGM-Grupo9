@@ -8,13 +8,20 @@ import com.badlogic.gdx.graphics.Texture;
 public class GotaMala extends Gota {
 	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
-	public GotaMala(Texture textura, float hitboxSize) {
-		super(textura, hitboxSize);
+	public GotaMala(float hitboxSize) {
+		super(hitboxSize);
     }
+	
+	@Override
+	public Texture definirTextura() {
+	    Texture textura = new Texture(Gdx.files.internal("dropBad.png"));
+	    textura.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);  // Aplicar filtrado lineal
+	    return textura;
+	}
 	
 	public float setVelocidad() {
         // Velocidad fija para GotaBuena
-        return 200;
+        return 250;
     }
 
     @Override

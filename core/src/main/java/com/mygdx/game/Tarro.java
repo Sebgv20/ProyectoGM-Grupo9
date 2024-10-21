@@ -13,7 +13,7 @@ public class Tarro {
 	   private Texture bucketRightImage;
 	   private int vidas = 3;
 	   private int puntos = 0;
-	   private int velx = 400;
+	   private int velx = 750;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
@@ -46,16 +46,25 @@ public class Tarro {
 
 	   public void crear() {
 	       bucket = new Rectangle();
-	       bucket.x = 800 / 2 - 64 / 2;
-	       bucket.y = 20;
-	       bucket.width = 64;
-	       bucket.height = 64;
+	       //bucket.x = 800 / 2 - 64 / 2;
+	       //bucket.y = 20;  
+	       bucket.x = 1920 / 2 - 128 / 2;
+	       bucket.y = 30;
+	       
+	       //bucket.width = 64;
+	       //bucket.height = 64;
+	       bucket.width = 138;
+	       bucket.height = 85;
 	   }
 
 	   public void dañar() {
 	      vidas--;
 	      herido = true;
 	      tiempoHerido = tiempoHeridoMax;
+	   }
+	   
+	   public void curar() {
+		   vidas++; 
 	   }
 
 	   public void dibujar(SpriteBatch batch) {
@@ -83,7 +92,8 @@ public class Tarro {
 	       
 	       // Asegúrate de que no se salga de los bordes izquierdo y derecho
 	       if(bucket.x < 0) bucket.x = 0;
-	       if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+	       //if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+	       if(bucket.x > 1920 - 138) bucket.x = 1920 - 138;
 	   }
 	   
 	   public void destruir() {

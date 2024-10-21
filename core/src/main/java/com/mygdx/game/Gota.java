@@ -10,11 +10,14 @@ public abstract class Gota {
     private float hitboxSize;
     private float velocidad;
     
-    public Gota(Texture textura, float hitboxSize) {
-        this.textura = textura;
+    public Gota(float hitboxSize) {
         this.hitboxSize = hitboxSize;
+        this.textura = definirTextura(); // Cada subclase define su textura
         this.velocidad = setVelocidad();  // Cada subclase establece su velocidad
     }
+    
+    // Método abstracto para que cada subclase proporcione su textura
+    public abstract Texture definirTextura();
     
     public abstract float setVelocidad();
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
@@ -14,99 +15,132 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;	   
     private BitmapFont font;
+    private ShapeRenderer shapeRenderer; // Añadido para el suelo
    
-    private Texture bucketLeftImage;
-    private Texture bucketRightImage;
-    private Tarro tarro;
+    private Texture bucketLeftImage; // Imagen del player cuando camina a la izquierda
+    private Texture bucketRightImage; // Imagen del player cuando camina a la derecha
+    private Tarro tarro; // El player
     private Lluvia lluvia;
+    
+    private Music rainMusic;
 
     // Variables para el temporizador
     private float tiempoRestante; // Tiempo restante en segundos
     private boolean temporizadorActivo; // Estado del temporizador
+    private boolean isGameOver;
 
     // Constructor que acepta una referencia al controlador de pantallas (MainGame)
     public GameScreen(GameLluviaMenu game) {
         this.game = game;
+        this.isGameOver = false; // Agregar esto
     }
 
     @Override
     public void show() {
         font = new BitmapFont();
+        font.getData().setScale(2.0f);
 		 
-        // Inicializar el temporizador
-        tiempoRestante = 20; // Por ejemplo, 60 segundos
+        // Temporizador del juego
+        tiempoRestante = 41; // Por ejemplo, 61 segundos
         temporizadorActivo = true;
 
-        // Cargar texturas y sonidos
-        bucketLeftImage = new Texture(Gdx.files.internal("bucketIzq2.png"));
-        bucketRightImage = new Texture(Gdx.files.internal("bucketDer2.png"));
+        // Carga el tarro (player) y sus texturas
+        bucketLeftImage = new Texture(Gdx.files.internal("bucketIzq.png"));
+        bucketRightImage = new Texture(Gdx.files.internal("bucketDer.png"));
+        
         tarro = new Tarro(bucketLeftImage, bucketRightImage);
         
-        // Texturas de gotas y música
-        Texture gotaBuena = new Texture(Gdx.files.internal("drop.png"));
-        Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
-        Texture gotaSuper = new Texture(Gdx.files.internal("dropSuper.png"));
-        Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
-        lluvia = new Lluvia(gotaBuena, gotaMala, gotaSuper, rainMusic);
+        // Música de fondo
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
+        lluvia = new Lluvia(rainMusic); // Genera la lluvia
 		
         // Configuración de la cámara
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1920, 1080);
         batch = new SpriteBatch();
+        
+        shapeRenderer = new ShapeRenderer(); // Inicializa el ShapeRenderer
 		
-        // Crear objetos
+        // Crea objetos
         tarro.crear();
         lluvia.crear();
     }
 
     @Override
     public void render(float delta) { 
-        // Limpiar la pantalla con color azul oscuro
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+    	ScreenUtils.clear(0, 0, 0, 1); // Limpia la pantalla
 
-        // Actualizar matrices de la cámara
+        // Si el juego ya terminó, deja de renderizar
+        if (isGameOver) {
+            return;
+        }
+
+        // Actualiza las matrices de la cámara
         camera.update();
-        
-        // Establecer la proyección de la cámara en el batch
+
+        // Establece la proyección de la cámara en el batch
         batch.setProjectionMatrix(camera.combined);
-        
-        // Iniciar el batch
+
+        // Inicia el batch
         batch.begin();
         
-        // Dibujar textos
-        font.draw(batch, "Puntuación: " + tarro.getPuntos(), 5, 475);
-        font.draw(batch, "Vidas : " + tarro.getVidas(), 720, 475);
+        // Dibuja textos de puntuación, vidas, y temporizador
+        font.draw(batch, "Puntuación: " + tarro.getPuntos(), 10, 1080-10);
+        font.draw(batch, "Vidas : " + tarro.getVidas(), 1920-130, 1080-10);
+        font.draw(batch, "Tiempo: " + (int) tiempoRestante, 960-50, 1080-10); // Muestra el tiempo restante como un entero
         
-        // Dibujar el temporizador
-        font.draw(batch, "Tiempo: " + (int) tiempoRestante, 350, 475); // Muestra el tiempo restante como un entero
-        
-        // Si el temporizador está activo, actualizarlo
+        // Actualiza el temporizador mientras esté activo
         if (temporizadorActivo) {
-            tiempoRestante -= delta; // Restar el tiempo transcurrido (delta)
+            tiempoRestante -= delta; // Resta el tiempo transcurrido (delta)
+
+            // Si el tiempo llega a 0, el juego termina
             if (tiempoRestante <= 0) {
-                tiempoRestante = 0; // Asegúrate de que no sea negativo
-                temporizadorActivo = false; // Detener el temporizador
-                game.setScreen(new GameOverScreen(game, getPuntuacionFinal())); // Cambiar a Game Over si se acaba el tiempo
+                tiempoRestante = 0; // Para que tiempo no pueda ser negativo
+                temporizadorActivo = false; // Detiene el temporizador
+
+                // Termina el juego
+                isGameOver = true;
+                rainMusic.stop(); // Termina la música
+
+                // Posterga el cambio de pantalla para el siguiente ciclo
+                Gdx.app.postRunnable(() -> {
+                    game.setScreen(new GameOverScreen(game, getPuntuacionFinal(), "¡Se acabó el tiempo!")); // Pasar la razón
+                });
             }
         }
-        
-        // Si el tarro no está herido, actualizar su movimiento y el de la lluvia
-        if (!tarro.estaHerido()) {
-            tarro.actualizarMovimiento();       
-            lluvia.actualizarMovimiento(tarro, game); 
+
+        // Solo se actualiza el juego si no estamos en Game Over
+        if (!isGameOver) {
+            // Si el tarro no está herido, actualizar su movimiento y el de la lluvia
+            if (!tarro.estaHerido()) {
+                tarro.actualizarMovimiento();       
+                lluvia.actualizarMovimiento(tarro, game); 
+            }
+
+            // Verifica si el jugador ha perdido todas las vidas
+            if (tarro.getVidas() <= 0) {
+                isGameOver = true;  // Activamos la bandera de Game Over
+                rainMusic.stop();
+                
+                // Posterga el cambio de pantalla para el siguiente ciclo
+                Gdx.app.postRunnable(() -> {
+                    game.setScreen(new GameOverScreen(game, getPuntuacionFinal(), "Te moristes :(")); // Pasar la razón
+                });
+            }
         }
-        
-        // Verificar Game Over después de actualizar el movimiento
-        if (tarro.getVidas() <= 0) {
-        	game.setScreen(new GameOverScreen(game, getPuntuacionFinal()));  
-        }
-        
+
         // Dibujar el tarro y las gotas de lluvia
         tarro.dibujar(batch);
         lluvia.actualizarDibujoLluvia(batch);
-        
-        // Terminar el batch
-        batch.end();		
+
+        batch.end(); // Terminar el batch
+
+        // Dibuja el suelo
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(1, 1, 1, 1); // Color blanco
+        shapeRenderer.rect(0, 0, 1920, 30); // Dibuja el suelo (x, y, ancho, alto)
+        shapeRenderer.end(); // Termina el dibujo del ShapeRenderer
     }
     
     @Override
@@ -127,7 +161,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        // Lógica para cuando el juego se pausa (puedes dejarlo vacío si no necesitas hacer nada)
+        // Lógica para cuando el juego se pausa (se puede dejar vacío si no se usa)
+    }
+    
+    public float getTiempoRestante() {
+        return tiempoRestante;
     }
 
     @Override
@@ -136,6 +174,7 @@ public class GameScreen implements Screen {
         lluvia.destruir();  
         batch.dispose();
         font.dispose();  
+        rainMusic.dispose();
+        shapeRenderer.dispose(); // Libera el ShapeRenderer
     }
 }
-

@@ -13,33 +13,37 @@ public class GameOverScreen implements Screen {
     private BitmapFont font;
     private OrthographicCamera camera;
     private float puntuacionFinal;
+    private String razonFinJuego;  // Nueva variable para la razón del fin del juego
 
-    public GameOverScreen(final GameLluviaMenu game, float puntuacionFinal) {
+    public GameOverScreen(final GameLluviaMenu game, float puntuacionFinal, String razonFinJuego) {
         this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
         this.puntuacionFinal = puntuacionFinal;
+        this.razonFinJuego = razonFinJuego;  // Inicializa la razón
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
     }
 
     @Override
-	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
-		
-		batch.begin();
-		font.draw(batch, "GAME OVER ", 100, 200);
-		font.draw(batch, "Tu puntuación fue de: " + puntuacionFinal, 100, 150);
-		font.draw(batch, "Toca en cualquier lado para reiniciar.", 100, 100);
-		batch.end();
+    public void render(float delta) {
+    	ScreenUtils.clear(0, 0, 0, 1);
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+        
+        batch.begin();
+        font.draw(batch, "GAME OVER ", 200, 200);
+        font.draw(batch, "Tu puntuación fue de: " + puntuacionFinal, 200, 150);
+        font.draw(batch, razonFinJuego, 200, 100); // Mostrar la razón por la que terminó el juego
+        font.draw(batch, "Toca en cualquier lado para reiniciar.", 150, 50);
+        batch.end();
 
-		if (Gdx.input.isTouched()) {
-			game.setScreen(new MainMenuScreen(game));
-			dispose();
-		}
-	}
+        if (Gdx.input.isTouched()) {
+            Gdx.app.postRunnable(() -> {
+                game.setScreen(new MainMenuScreen(game));
+            });
+        }
+    }
 
     @Override
     public void show() {
