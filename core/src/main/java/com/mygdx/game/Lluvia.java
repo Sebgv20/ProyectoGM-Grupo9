@@ -38,20 +38,20 @@ public class Lluvia {
         // Ajustar probabilidades en función del tiempo restante
         float probabilidadGotaBuena = 0.65f; // 65%
         float probabilidadGotaMala = 0.20f;   // 20%
-        float probabilidadGotaSuper = 0.12f;  // 12%
-        // gotaHeal tiene el último 3%
+        float probabilidadGotaSuper = 0.14f;  // 12%
+        // gotaHeal tiene el último 1%
         // Todas deben sumar en total 1
 
         if (tiempoRestante <= 30 && tiempoRestante > 15 ) { // Cambia la probabilidad a partir de 30 segundos
         	probabilidadGotaBuena = 0.55f; // 55%
             probabilidadGotaMala = 0.30f;   // 30%
-            probabilidadGotaSuper = 0.12f;  // 10%
-            // gotaHeal tiene el último 3%
+            probabilidadGotaSuper = 0.14f;  // 10%
+            // gotaHeal tiene el último 1%
         }
         if (tiempoRestante <= 15) { // Cambia la probabilidad a partir de 30 segundos
         	probabilidadGotaBuena = 0.50f; // 60%
             probabilidadGotaMala = 0.40f;   // 25%
-            probabilidadGotaSuper = 0.095f;  // 10%
+            probabilidadGotaSuper = 0.099f;  // 9%
         }
 
         // Generar un número aleatorio y seleccionar el tipo de gota

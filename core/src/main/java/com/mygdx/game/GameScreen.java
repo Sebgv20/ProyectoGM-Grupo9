@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         font.getData().setScale(2.0f);
 		 
         // Temporizador del juego
-        tiempoRestante = 41; // Por ejemplo, 61 segundos
+        tiempoRestante = 31; // Por ejemplo, 61 segundos
         temporizadorActivo = true;
 
         // Carga el tarro (player) y sus texturas
@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
 
                 // Posterga el cambio de pantalla para el siguiente ciclo
                 Gdx.app.postRunnable(() -> {
-                    game.setScreen(new GameOverScreen(game, getPuntuacionFinal(), "¡Se acabó el tiempo!")); // Pasar la razón
+                    game.setScreen(new ScreenGameOver(game, getPuntuacionFinal(), "¡Se acabó el tiempo!")); // Pasar la razón
                 });
             }
         }
@@ -124,7 +124,7 @@ public class GameScreen implements Screen {
                 
                 // Posterga el cambio de pantalla para el siguiente ciclo
                 Gdx.app.postRunnable(() -> {
-                    game.setScreen(new GameOverScreen(game, getPuntuacionFinal(), "Te moristes :(")); // Pasar la razón
+                    game.setScreen(new ScreenGameOver(game, getPuntuacionFinal(), "Te moristes :(")); // Pasar la razón
                 });
             }
         }

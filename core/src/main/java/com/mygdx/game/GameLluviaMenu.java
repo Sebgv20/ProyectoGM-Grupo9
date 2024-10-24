@@ -1,41 +1,45 @@
 package com.mygdx.game;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Music;
 
 public class GameLluviaMenu extends Game {
-	private SpriteBatch batch;
-	private BitmapFont font;
-	private int higherScore;
+    private SpriteBatch batch;
+    private BitmapFont font;
+    private Music menuMusic;
 
-	public void create() {
-		batch = new SpriteBatch();
-		font = new BitmapFont(); // use libGDX's default Arial font
-		this.setScreen(new MainMenuScreen(this));
-	}
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        font = new BitmapFont();
 
-	public void render() {
-		super.render(); // important!
-	}
+        // Cargar y reproducir la música del menú en la clase principal
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+        menuMusic.setLooping(true);  // Repetir la música en bucle
+        menuMusic.play();
 
-	public void dispose() {
-		batch.dispose();
-		font.dispose();
-	}
+        this.setScreen(new ScreenMainMenu(this));  // Comenzar en el menú principal
+    }
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 
-	public BitmapFont getFont() {
-		return font;
-	}
+    public BitmapFont getFont() {
+        return font;
+    }
 
-	public int getHigherScore() {
-		return higherScore;
-	}
+    public Music getMenuMusic() {
+        return menuMusic;
+    }
 
-	public void setHigherScore(int higherScore) {
-		this.higherScore = higherScore;
-	}
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+        menuMusic.dispose();  // Liberar la música cuando se cierra el juego
+    }
 }
