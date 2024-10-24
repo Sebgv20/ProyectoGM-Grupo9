@@ -14,8 +14,8 @@ public class GotaHeal extends Gota {
     
     @Override
 	public Texture definirTextura() {
-	    Texture textura = new Texture(Gdx.files.internal("dropHeal.png"));
-	    textura.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);  // Aplicar filtrado lineal
+	    Texture textura = new Texture(Gdx.files.internal("dropHeal.png"),true);
+	    textura.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
 	    return textura;
 	}
     

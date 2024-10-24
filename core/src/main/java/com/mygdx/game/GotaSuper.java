@@ -14,8 +14,8 @@ public class GotaSuper extends Gota {
 
     @Override
 	public Texture definirTextura() {
-	    Texture textura = new Texture(Gdx.files.internal("dropSuper.png"));
-	    textura.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);  // Aplicar filtrado lineal
+	    Texture textura = new Texture(Gdx.files.internal("dropSuper.png"),true);
+	    textura.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
 	    return textura;
 	}
     

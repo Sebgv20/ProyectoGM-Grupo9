@@ -80,12 +80,12 @@ public class Tarro {
 	   
 	   public void actualizarMovimiento() { 
 	       // Movimiento desde el teclado
-	       if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		   if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 	           bucket.x -= velx * Gdx.graphics.getDeltaTime();
 	           bucketImage = bucketLeftImage; // Cambia a la textura de la izquierda
 	       }
 	       
-	       if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+	       if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
 	           bucket.x += velx * Gdx.graphics.getDeltaTime();
 	           bucketImage = bucketRightImage; // Cambia a la textura de la derecha
 	       }

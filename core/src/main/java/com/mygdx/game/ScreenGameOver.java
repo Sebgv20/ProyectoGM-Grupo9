@@ -22,7 +22,8 @@ public class ScreenGameOver implements Screen {
         this.puntuacionFinal = puntuacionFinal;
         this.razonFinJuego = razonFinJuego;  // Inicializa la razón
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        //camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1920, 1080);
     }
 
     @Override

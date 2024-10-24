@@ -26,7 +26,8 @@ public class ScreenMainMenu implements Screen {
         this.batch = game.getBatch();
         this.font = game.getFont();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        //camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1920, 1080);
     }
 
     @Override
@@ -47,15 +48,15 @@ public class ScreenMainMenu implements Screen {
 
         batch.begin();
 
-        // Dibujar los textos
-        font.getData().setScale(1, 1);
-        font.draw(batch, "Haz click en la tecla indicada para las opciones", 249, 470);
+        // Dibujar textos
+        font.getData().setScale(3,3);
+        font.draw(batch, "Haz click en la tecla mostrada para las opciones", 1920/2 -450, 1080-20);
 
         // Dibujar las imágenes de los botones
-        batch.draw(buttonPlay, 100, camera.viewportHeight / 2 + 50, 200, 80);
-        batch.draw(buttonTutorial, 100, camera.viewportHeight / 2 - 50, 200, 80);
-        batch.draw(buttonExit, 100, camera.viewportHeight / 2 - 150, 200, 80);
-        batch.draw(logo, 380, camera.viewportHeight / 2-158, 300, 300);
+        batch.draw(buttonPlay, 200, camera.viewportHeight / 2 + 120, 400, 160); //tamaño anterior 200, 80
+        batch.draw(buttonTutorial, 200, camera.viewportHeight / 2-80, 400, 160);
+        batch.draw(buttonExit, 200, camera.viewportHeight / 2 - 280, 400, 160);
+        batch.draw(logo, 1000, camera.viewportHeight / 2-300, 600, 600);
 
         batch.end();
 
@@ -75,6 +76,7 @@ public class ScreenMainMenu implements Screen {
         // Cierra el juego cuando el jugador presiona Esc
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
             Gdx.app.exit();  // Cierra la aplicación
+            dispose();
         }
     }
 
@@ -100,5 +102,6 @@ public class ScreenMainMenu implements Screen {
         buttonPlay.dispose();
         buttonTutorial.dispose();
         buttonExit.dispose();
+        logo.dispose();
     }
 }

@@ -7,19 +7,47 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.Texture;
 
 public class ScreenTutorial implements Screen {
     private final GameLluviaMenu game;
     private SpriteBatch batch;	   
     private BitmapFont font;
     private OrthographicCamera camera;
+    
+    private Texture buttonBack;
+    private Texture player;
+    private Texture drop;
+    private Texture dropBad;
+    private Texture dropHeal;
+    private Texture dropSuper;
 
     public ScreenTutorial(final GameLluviaMenu game) {
         this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        //camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1920, 1080);
+    }
+    
+    @Override
+    public void show() {
+        // Cargar las imágenes de los botones con mipmaps habilitados
+        buttonBack = new Texture(Gdx.files.internal("ButtonBack.png"), true); // Habilitar mipmaps
+        player = new Texture(Gdx.files.internal("bucketDer.png"), true);
+        drop = new Texture(Gdx.files.internal("drop.png"), true);
+        dropBad = new Texture(Gdx.files.internal("dropBad.png"), true);
+        dropHeal = new Texture(Gdx.files.internal("dropHeal.png"), true);
+        dropSuper = new Texture(Gdx.files.internal("dropSuper.png"), true);
+        
+        // Aplicar filtrado trilineal
+        buttonBack.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        player.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        drop.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        dropBad.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        dropHeal.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        dropSuper.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
     }
 
     @Override
@@ -29,18 +57,41 @@ public class ScreenTutorial implements Screen {
         batch.setProjectionMatrix(camera.combined);
         
         batch.begin();
-        font.draw(batch, "Tutorial", 200, 200);
+        
+        // Dibujar textos
+        font.getData().setScale(2,2);
+        
+        batch.draw(buttonBack, 5, 1080-85, 200,80);
+        
+        // Imágenes de los elementos del juego y sus instrucciones
+        batch.draw(player, 30, 1080-250, 183,112);
+        font.draw(batch, "Este eres tu, dispones de 3 vidas y debes recoger los distintos elementos en pantalla\n"
+        		+ "para acumular puntos. ¡Cuidado con lo que agarras!", 250, 1080-170);
+        
+        batch.draw(drop, 70, 1080-400, 100,100);
+        font.draw(batch, "La energía más básica y tu principal fuente para aumentar tu puntaje.", 250, 1080-100-230);
+        
+        batch.draw(dropBad, 70, 1080-550, 100,100);
+        font.draw(batch, "Tu mayor enemigo, cuidado con tomar una de estas,\n"
+        		+ "¡Perderás vida y parte de tus puntos!", 250, 1080-100-380);
+        
+        batch.draw(dropHeal, 70, 1080-700, 100,100);
+        font.draw(batch, "Energía que no solo te dará puntaje, si no que recuperarás una de tus vidas perdidas.\n"
+        		+ "No puedes tener más de 3 vidas.", 250, 1080-100-530);
+        
+        batch.draw(dropSuper, 70, 1080-850, 100,100);
+        font.draw(batch, "Energía con gran poder que otorga una cantidad considerable de puntos.\n"
+        		+ "¡Asegurate de recoger cuantas puedas!", 250, 1080-100-680);
+        
+        font.draw(batch, "Tu propósito será recoger distintos tipos de energía para poder hacerte con el mayor puntaje posible.\n"
+        		+ "Dispondrás de una cantidad de tiempo definida y solo 3 vidas para jugar. ¡Éxito!\n", 30, 1080-100-830);
+        
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 game.setScreen(new ScreenMainMenu(game));  // Volver al menú principal
                 dispose();  // Liberar recursos
             };
-    }
-
-    @Override
-    public void show() {
-        // No gestionar la música aquí
     }
 
     @Override
@@ -61,6 +112,11 @@ public class ScreenTutorial implements Screen {
 
     @Override
     public void dispose() {
-        // No detener la música aquí
+    	buttonBack.dispose();
+        player.dispose();
+        drop.dispose();
+        dropBad.dispose();
+        dropHeal.dispose();
+        dropSuper.dispose();
     }
 }
