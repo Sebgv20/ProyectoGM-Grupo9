@@ -21,6 +21,7 @@ public abstract class Gota {
     
     public abstract float setVelocidad();
 
+    //Velocidad de las gotas
     public float getVelocidad() {
         return velocidad;
     }
