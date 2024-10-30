@@ -8,21 +8,24 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Lluvia {
+
+// Lluvia para el nivel 2
+public class LluviaLevel2 implements ILluvia {
     private Array<Rectangle> rainDropsPos;
     private Array<Gota> rainDrops;
     private long lastDropTime;
     private Music rainMusic;
-    private float hitboxSize = 55; // Cambia el tamaño de la hitbox y de la imagen
+    private float hitboxSize = 55;
 
-    public Lluvia(Music rainMusic) {
+    public LluviaLevel2(Music rainMusic) {
         this.rainMusic = rainMusic;
         rainDrops = new Array<>();
         rainDropsPos = new Array<>();
     }
 
+    @Override
     public void crear() {
-        crearGotaDeLluvia(30); // Llama a la función con un valor inicial para el tiempo restante
+        crearGotaDeLluvia(30);
         rainMusic.setLooping(true);
         rainMusic.play();
     }
@@ -35,23 +38,27 @@ public class Lluvia {
         raindrop.height = hitboxSize;
         rainDropsPos.add(raindrop);
 
+        // Todas las gotas deben sumar en total 1
         // Ajustar probabilidades en función del tiempo restante
-        float probabilidadGotaBuena = 0.65f; // 65%
-        float probabilidadGotaMala = 0.20f;   // 20%
-        float probabilidadGotaSuper = 0.14f;  // 12%
-        // gotaHeal tiene el último 1%
-        // Todas deben sumar en total 1
+        float probabilidadGotaBuena = 0.55f;  // 55%
+        float probabilidadGotaMala = 0.25f;   // 25%
+        float probabilidadGotaSuper = 0.10f;  // 10%
+        float probabilidadGotaZap = 0.5f; 	  // 5%
+        // gotaHeal tiene el último 5%
 
         if (tiempoRestante <= 30 && tiempoRestante > 15 ) { // Cambia la probabilidad a partir de 30 segundos
-        	probabilidadGotaBuena = 0.55f; // 55%
-            probabilidadGotaMala = 0.30f;   // 30%
-            probabilidadGotaSuper = 0.14f;  // 10%
-            // gotaHeal tiene el último 1%
+        	probabilidadGotaBuena = 0.45f;  // 45%
+            probabilidadGotaMala = 0.40f;   // 40%
+            probabilidadGotaSuper = 0.07f;  // 5%
+            probabilidadGotaZap = 0.06f;     // 6%
+            // gotaHeal tiene el último 2%
         }
         if (tiempoRestante <= 15) { // Cambia la probabilidad a partir de 30 segundos
-        	probabilidadGotaBuena = 0.50f; // 60%
-            probabilidadGotaMala = 0.40f;   // 25%
-            probabilidadGotaSuper = 0.099f;  // 9%
+        	probabilidadGotaBuena = 0.35f;   // 60%
+            probabilidadGotaMala = 0.55f;    // 25%
+            probabilidadGotaSuper = 0.033f;  // 9.9%
+            probabilidadGotaZap = 0.06f;     // 5%
+         // gotaHeal tiene el último %
         }
 
         // Generar un número aleatorio y seleccionar el tipo de gota
@@ -63,6 +70,8 @@ public class Lluvia {
             rainDrops.add(new GotaMala(hitboxSize));
         } else if (random < probabilidadGotaBuena + probabilidadGotaMala + probabilidadGotaSuper) {
             rainDrops.add(new GotaSuper(hitboxSize));
+        } else if (random < probabilidadGotaBuena + probabilidadGotaMala + probabilidadGotaSuper + probabilidadGotaZap) {
+            rainDrops.add(new GotaZap(hitboxSize));
         } else {
             rainDrops.add(new GotaHeal(hitboxSize));
         }
@@ -71,28 +80,27 @@ public class Lluvia {
     }
 
     private float calcularMultiplicadorVelocidad(GameLluviaMenu game) {
-        // Obtener el tiempo restante del juego
-        GameScreen gameScreen = (GameScreen) game.getScreen();
+        GameScreenLevel2 gameScreen = (GameScreenLevel2) game.getScreen();
         float tiempoRestante = gameScreen.getTiempoRestante();
 
         // Ajustar el multiplicador: a menor tiempo, mayor velocidad
-        if (tiempoRestante > 31) {
-            return 1.0f;  // Velocidad normal
+        if (tiempoRestante > 30) {
+            return 1.2f;  // Velocidad normal
         } else if (tiempoRestante > 16) {
-            return 1.5f;  // Incrementar velocidad
+            return 1.7f;  // Incrementar velocidad
         } else if (tiempoRestante > 6) {
-            return 2.0f;  // Más rápido
+            return 2.5f;  // Más rápido
         } else {
-            return 3.0f;  // Velocidad máxima cuando queda muy poco tiempo
+            return 3f;  // Velocidad máxima cuando queda muy poco tiempo
         }
     }
 
+    @Override
     public void actualizarMovimiento(Tarro tarro, GameLluviaMenu game) {
-        // Crear gotas de lluvia a intervalos
         if (TimeUtils.nanoTime() - lastDropTime > 100000000) {
-            GameScreen gameScreen = (GameScreen) game.getScreen();
+            GameScreenLevel2 gameScreen = (GameScreenLevel2) game.getScreen();
             float tiempoRestante = gameScreen.getTiempoRestante();
-            crearGotaDeLluvia(tiempoRestante); // Pasar el tiempo restante
+            crearGotaDeLluvia(tiempoRestante);
         }
 
         float multiplicadorVelocidad = calcularMultiplicadorVelocidad(game);
@@ -101,25 +109,23 @@ public class Lluvia {
             Rectangle raindrop = rainDropsPos.get(i);
             Gota gota = rainDrops.get(i);
 
-            // Ajustar la velocidad con el multiplicador basado en el tiempo restante
             raindrop.y -= gota.getVelocidad() * multiplicadorVelocidad * Gdx.graphics.getDeltaTime();
 
-            // Si la gota sale de la pantalla, elimínala
             if (raindrop.y + 64 < 0) {
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
                 continue;
             }
 
-            // Verificar si colisiona con el tarro
             if (raindrop.overlaps(tarro.getArea())) {
-                gota.aplicarEfecto(tarro);  // Aplicar el efecto (dañar o sumar puntos)
+                gota.aplicarEfecto(tarro);
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
             }
         }
     }
 
+    @Override
     public void actualizarDibujoLluvia(SpriteBatch batch) {
         for (int i = 0; i < rainDropsPos.size; i++) {
             Gota gota = rainDrops.get(i);
@@ -128,6 +134,7 @@ public class Lluvia {
         }
     }
 
+    @Override
     public void destruir() {
         rainMusic.dispose();
     }

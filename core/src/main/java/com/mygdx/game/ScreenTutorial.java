@@ -65,26 +65,26 @@ public class ScreenTutorial implements Screen {
         
         // Imágenes de los elementos del juego y sus instrucciones
         batch.draw(player, 30, 1080-250, 183,112);
-        font.draw(batch, "Este eres tu, dispones de 3 vidas y debes recoger los distintos elementos en pantalla\n"
+        font.draw(batch, "Este eres tu, dispones de 3 vidas y debes recoger los distintos orbes en pantalla\n"
         		+ "para acumular puntos. ¡Cuidado con lo que agarras!", 250, 1080-170);
         
         batch.draw(drop, 70, 1080-400, 100,100);
-        font.draw(batch, "La energía más básica y tu principal fuente para aumentar tu puntaje.", 250, 1080-100-230);
+        font.draw(batch, "El orbe más básico y tu principal alternativa para aumentar tu puntaje.", 250, 1080-100-230);
         
         batch.draw(dropBad, 70, 1080-550, 100,100);
         font.draw(batch, "Tu mayor enemigo, cuidado con tomar una de estas,\n"
-        		+ "¡Perderás vida y parte de tus puntos!", 250, 1080-100-380);
+        		+ "¡Perderás una vida y parte de tus puntos!", 250, 1080-100-380);
         
         batch.draw(dropHeal, 70, 1080-700, 100,100);
-        font.draw(batch, "Energía que no solo te dará puntaje, si no que recuperarás una de tus vidas perdidas.\n"
-        		+ "No puedes tener más de 3 vidas.", 250, 1080-100-530);
+        font.draw(batch, "Un orbe que no solo otorga puntos, si no que recupera una vida perdida.\n"
+        		+ "No se pueden tener más de 3 vidas.", 250, 1080-100-530);
         
         batch.draw(dropSuper, 70, 1080-850, 100,100);
-        font.draw(batch, "Energía con gran poder que otorga una cantidad considerable de puntos.\n"
-        		+ "¡Asegurate de recoger cuantas puedas!", 250, 1080-100-680);
+        font.draw(batch, "Un orbe con gran poder que otorga una cantidad considerable de puntos.\n"
+        		+ "¡Recoge cuantas puedas!", 250, 1080-100-680);
         
-        font.draw(batch, "Tu propósito será recoger distintos tipos de energía para poder hacerte con el mayor puntaje posible.\n"
-        		+ "Dispondrás de una cantidad de tiempo definida y solo 3 vidas para jugar. ¡Éxito!\n", 30, 1080-100-830);
+        font.draw(batch, "Tu propósito será atrapar orbes para poder hacerte con el mayor puntaje posible.\n"
+        		+ "Dispondrás de una cantidad de tiempo definida y solo 3 vidas para jugar. ¡Éxito!", 30, 1080-100-830);
         
         batch.end();
 

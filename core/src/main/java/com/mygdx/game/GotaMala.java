@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GotaMala extends Gota {
-	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+	private Sound FinaldropSound = Gdx.audio.newSound(Gdx.files.internal("FinalHurt.ogg"));
+	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("hurt.mp3"));
 	
 	public GotaMala(float hitboxSize) {
 		super(hitboxSize);
@@ -27,7 +28,12 @@ public class GotaMala extends Gota {
     @Override
     public void aplicarEfecto(Tarro tarro) {
         tarro.dañar();
-        dropSound.play();
+        if (tarro.getVidas() >= 1) {
+        	dropSound.play();
+        } else {
+        	FinaldropSound.play();
+        }
+
         if (tarro.getPuntos() <= 50) {
             tarro.restarPuntos(tarro.getPuntos());
         } else {

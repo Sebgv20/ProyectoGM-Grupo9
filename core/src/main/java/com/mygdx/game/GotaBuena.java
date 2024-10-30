@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GotaBuena extends Gota {
-    private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+    private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropSound.wav"));
 
     public GotaBuena(float hitboxSize) {
         super(hitboxSize);
@@ -21,7 +21,7 @@ public class GotaBuena extends Gota {
     
     @Override
     public float setVelocidad() {
-        return 250;  // Velocidad fija para GotaBuena
+        return 300;  // Velocidad fija para GotaBuena
     }
 
     @Override

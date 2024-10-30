@@ -13,7 +13,7 @@ public class Tarro {
 	   private Texture bucketRightImage;
 	   private int vidas = 3;
 	   private int puntos = 0;
-	   private int velx = 750;
+	   private int velx = 650;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
@@ -43,6 +43,9 @@ public class Tarro {
 	   public void restarPuntos(int pp) {
 	       puntos -= pp;
 	   }
+	   public void setVelocidad(int velocidad) {
+	       velx = velocidad;
+	   }
 
 	   public void crear() {
 	       bucket = new Rectangle();
@@ -61,6 +64,7 @@ public class Tarro {
 	      vidas--;
 	      herido = true;
 	      tiempoHerido = tiempoHeridoMax;
+	      velx = 750;
 	   }
 	   
 	   public void curar() {

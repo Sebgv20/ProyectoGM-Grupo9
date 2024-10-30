@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GotaHeal extends Gota {
-	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("healDrop.mp3"));
+	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropHealSound.mp3"));
 
     public GotaHeal(float hitboxSize) {
         super(hitboxSize);
@@ -27,7 +27,7 @@ public class GotaHeal extends Gota {
     public void aplicarEfecto(Tarro tarro) {
     	if (tarro.getVidas() < 3) {
     		tarro.curar();
-    		tarro.sumarPuntos(5);
+    		tarro.sumarPuntos(2);
         } else {
         	tarro.sumarPuntos(5);
         }
