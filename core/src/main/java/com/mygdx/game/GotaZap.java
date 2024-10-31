@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
+// Gota que otorga velocidad de movimiento al jugador
 public class GotaZap extends Gota {
 	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropZapSound.mp3"));
 
@@ -19,15 +19,14 @@ public class GotaZap extends Gota {
 	    return textura;
 	}
     
-    public float setVelocidad() {
-        // Velocidad fija para GotaBuena
-        return 650;
-    }
-    
     @Override
     public void aplicarEfecto(Tarro tarro) {
-    	tarro.setVelocidad(1250);
+    	tarro.setVelocidad(tarro.getVelocidad()*1.2f); // Es acumulable
     	tarro.sumarPuntos(5);
         dropSound.play();
+    }
+    
+    public float setVelocidad() {
+        return 650; // Velocidad fija para GotaZap
     }
 }

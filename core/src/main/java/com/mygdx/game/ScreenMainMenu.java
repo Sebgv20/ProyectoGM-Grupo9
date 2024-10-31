@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
+// Pantalla principal del juego
 public class ScreenMainMenu implements Screen {
     final GameLluviaMenu game;
     private SpriteBatch batch;
@@ -39,6 +40,8 @@ public class ScreenMainMenu implements Screen {
         buttonExit = new Texture(Gdx.files.internal("ButtonExit.png"));
         logoBorder = new Texture(Gdx.files.internal("LogoBorder.png"));
         logoName = new Texture(Gdx.files.internal("LogoName.png"));
+        
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     @Override
@@ -50,8 +53,8 @@ public class ScreenMainMenu implements Screen {
 
         batch.begin();
 
-        font.getData().setScale(3, 3);
-        font.draw(batch, "Haz click en la tecla mostrada para cada opción", 1920 / 2 - 460, 1080 - 20);
+        font.getData().setScale(2,2);
+        font.draw(batch, "Haz click en la tecla mostrada para cada opción", 960-300, 1080 - 20);
 
         batch.draw(buttonPlay, 200, camera.viewportHeight / 2 + 120, 400, 160);
         batch.draw(buttonTutorial, 200, camera.viewportHeight / 2 - 80, 400, 160);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
+// Gota que otorga puntos extra
 public class GotaSuper extends Gota {
 	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropSuperSound.wav"));
 
@@ -19,14 +19,13 @@ public class GotaSuper extends Gota {
 	    return textura;
 	}
     
-    public float setVelocidad() {
-        // Velocidad fija para GotaBuena
-        return 500;
-    }
-    
     @Override
     public void aplicarEfecto(Tarro tarro) {
         tarro.sumarPuntos(35);
         dropSound.play();
+    } 
+    
+    public float setVelocidad() {
+        return 500; // Velocidad fija para GotaSuper
     }
 }

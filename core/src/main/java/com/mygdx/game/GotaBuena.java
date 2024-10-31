@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
+// Gota estándar del juego
 public class GotaBuena extends Gota {
     private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropSound.wav"));
 
@@ -18,15 +18,15 @@ public class GotaBuena extends Gota {
 	    textura.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
 	    return textura;
 	}
+
+    @Override
+    public void aplicarEfecto(Tarro tarro) {
+        tarro.sumarPuntos(10);
+        dropSound.play();
+    }
     
     @Override
     public float setVelocidad() {
         return 300;  // Velocidad fija para GotaBuena
-    }
-
-    @Override
-    public void aplicarEfecto(Tarro tarro) {
-        tarro.sumarPuntos(5);
-        dropSound.play();
     }
 }

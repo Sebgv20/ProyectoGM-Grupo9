@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
+// Gota que daña al jugador
 public class GotaMala extends Gota {
 	private Sound FinaldropSound = Gdx.audio.newSound(Gdx.files.internal("FinalHurt.ogg"));
 	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("hurt.mp3"));
@@ -19,11 +19,6 @@ public class GotaMala extends Gota {
 	    textura.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
 	    return textura;
 	}
-	
-	public float setVelocidad() {
-        // Velocidad fija para GotaBuena
-        return 250;
-    }
 
     @Override
     public void aplicarEfecto(Tarro tarro) {
@@ -39,5 +34,9 @@ public class GotaMala extends Gota {
         } else {
             tarro.restarPuntos(50);
         }
+    }
+    	
+	public float setVelocidad() {
+        return 250; // Velocidad fija para GotaMala
     }
 }

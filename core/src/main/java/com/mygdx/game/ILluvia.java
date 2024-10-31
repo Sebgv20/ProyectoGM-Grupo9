@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+// Interfaz para las variaciones de lluvia (así la lluvia puede ser distinta en cada nivel)
 public interface ILluvia {
     // Inicia la creación de las gotas y la música de fondo.
     void crear();
@@ -12,6 +13,6 @@ public interface ILluvia {
     // Dibuja las gotas en pantalla.
     void actualizarDibujoLluvia(SpriteBatch batch);
 
-    // Libera los recursos utilizados, como la música.
+    // Libera los recursos utilizados (dispose).
     void destruir();
 }

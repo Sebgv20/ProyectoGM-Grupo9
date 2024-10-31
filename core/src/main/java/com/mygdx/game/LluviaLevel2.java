@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-
 // Lluvia para el nivel 2
 public class LluviaLevel2 implements ILluvia {
     private Array<Rectangle> rainDropsPos;

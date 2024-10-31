@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
+//Pantalla para seleccionar el nivel que se quiere jugar
 public class ScreenLevelSelector implements Screen {
     private final GameLluviaMenu game;
     private SpriteBatch batch;	   
@@ -52,9 +53,9 @@ public class ScreenLevelSelector implements Screen {
         batch.begin();
         
         // Dibujar textos
-        font.getData().setScale(2,2);
-        
+        font.getData().setScale(2,2);   
         batch.draw(buttonBack, 5, 1080-85, 200,80);
+        font.draw(batch, "Haz click en la tecla mostrada para cada opción", 960-300, 1080 - 20);
         
         // Imágenes de los elementos del juego y sus instrucciones
         batch.draw(lvl1, 155						, 1080-400, 400, 160);

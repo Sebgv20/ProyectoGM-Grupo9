@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
+// Gota que cura
 public class GotaHeal extends Gota {
 	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropHealSound.mp3"));
 
@@ -19,10 +19,6 @@ public class GotaHeal extends Gota {
 	    return textura;
 	}
     
-    public float setVelocidad() {
-        return 150;
-    }
-    
     @Override
     public void aplicarEfecto(Tarro tarro) {
     	if (tarro.getVidas() < 3) {
@@ -32,5 +28,9 @@ public class GotaHeal extends Gota {
         	tarro.sumarPuntos(5);
         }
         dropSound.play();
+    }
+    
+    public float setVelocidad() {
+        return 150; // Velocidad fija para GotaHeal
     }
 }

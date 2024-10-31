@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
+// Tarro = Jugador
 public class Tarro {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
@@ -13,7 +14,7 @@ public class Tarro {
 	   private Texture bucketRightImage;
 	   private int vidas = 3;
 	   private int puntos = 0;
-	   private int velx = 650;
+	   private float velx = 650;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
@@ -43,13 +44,17 @@ public class Tarro {
 	   public void restarPuntos(int pp) {
 	       puntos -= pp;
 	   }
-	   public void setVelocidad(int velocidad) {
+	   
+	   public float getVelocidad() {
+	       return velx;
+	   }
+	   public void setVelocidad(float velocidad) {
 	       velx = velocidad;
 	   }
 
 	   public void crear() {
 	       bucket = new Rectangle();
-	       //bucket.x = 800 / 2 - 64 / 2;
+	       //bucket.x = 800 / 2 - 64 / 2; Antiguos parametros
 	       //bucket.y = 20;  
 	       bucket.x = 1920 / 2 - 128 / 2;
 	       bucket.y = 30;
@@ -72,7 +77,7 @@ public class Tarro {
 	   }
 
 	   public void dibujar(SpriteBatch batch) {
-		    // Escalar la imagen para que coincida con las dimensiones del "bucket"
+		    // Escalar la imagen para que coincida con las dimensiones del jugador
 		    if (!herido) {
 		        batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
 		    } else {
@@ -94,7 +99,7 @@ public class Tarro {
 	           bucketImage = bucketRightImage; // Cambia a la textura de la derecha
 	       }
 	       
-	       // Asegúrate de que no se salga de los bordes izquierdo y derecho
+	       // Asegura de que no se salga de los bordes izquierdo y derecho
 	       if(bucket.x < 0) bucket.x = 0;
 	       //if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 	       if(bucket.x > 1920 - 138) bucket.x = 1920 - 138;
@@ -109,10 +114,10 @@ public class Tarro {
 	       return herido;
 	   }
 	   
+	   // Restablece los valores del jugador
 	   public void reiniciar() {
 	        this.puntos = 0; // Restablecer puntos
 	        this.vidas = 3;  // Restablecer vidas
-	        // Restablecer otras propiedades si es necesario
 	    }
 	}
 

@@ -75,7 +75,7 @@ public class GameScreenLevel2 implements Screen, GameLevel {
             if (tarro.getVidas() <= 0) {
                 isGameOver = true;
                 rainMusic.stop();
-                Gdx.app.postRunnable(() -> game.setScreen(new ScreenGameOver(game, getFinalScore(), "Te moriste :(", true)));
+                Gdx.app.postRunnable(() -> game.setScreen(new ScreenGameOver(game, getFinalScore(), "Te moristes :(", true)));
             }
         }
     }
@@ -144,4 +144,3 @@ public class GameScreenLevel2 implements Screen, GameLevel {
         return tiempoRestante;
     }
 }
-

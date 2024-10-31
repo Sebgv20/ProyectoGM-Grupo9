@@ -9,11 +9,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
 
+// Pantalla para el gameOver
 public class ScreenGameOver implements Screen {
     private final GameLluviaMenu game;
     private SpriteBatch batch;	   
     private BitmapFont font;
     private OrthographicCamera camera;
+    
     private float puntuacionFinal;
     private String razonFinJuego;
     private boolean muerte;
@@ -41,9 +43,12 @@ public class ScreenGameOver implements Screen {
         gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal("GameOverMusic.mp3"));
         gameFinishMusic = Gdx.audio.newMusic(Gdx.files.internal("GameFinishMusic.mp3"));
         
+        // Música si el jugador sobrevivió todo el tiempo del nivel
         if (!muerte) {
         	gameFinishMusic.play();
-        } else {
+        } 
+        // Música para cuando el jugador pierde
+        else {
         	gameOverMusic.setLooping(true);
             gameOverMusic.play();
         }
@@ -58,16 +63,17 @@ public class ScreenGameOver implements Screen {
         batch.begin();
         batch.draw(wip, 20, 1080 - 180, 400, 160);
         
-        font.draw(batch, "GAME OVER ", 200, 200);
-        font.draw(batch, "Tu puntuación fue de: " + puntuacionFinal, 200, 150);
-        font.draw(batch, razonFinJuego, 200, 100);
-        font.draw(batch, "Toca en cualquier lado para reiniciar.", 150, 50);
+        font.draw(batch, "GAME OVER:", 1920/2 - 230, 1080/2 + 100);
+        font.draw(batch, razonFinJuego, 1920/2 - 30, 1080/2 +100);
+        font.draw(batch, "Tu puntuación fue de: " + puntuacionFinal, 1920/2 - 230, 1080/2);
+        font.draw(batch, "Toca en cualquier lado para reiniciar.", 720, 1080/2 - 400);
         
         batch.end();
 
         if (Gdx.input.isTouched()) {
             Gdx.app.postRunnable(() -> {
-                gameOverMusic.stop();  // Detener la música antes de cambiar de pantalla
+            	gameFinishMusic.stop();
+                gameOverMusic.stop();
                 game.getMenuMusic().play();
                 game.setScreen(new ScreenMainMenu(game));
             });
@@ -85,8 +91,8 @@ public class ScreenGameOver implements Screen {
 
     @Override
     public void hide() {
-        gameOverMusic.stop();  // Asegurarse de detener la música al salir de la pantalla
-        gameFinishMusic.stop();  // Asegurarse de detener la música al salir de la pantalla
+        gameOverMusic.stop();  // Detiene la música al salir de la pantalla
+        gameFinishMusic.stop();  // Detiene la música al salir de la pantalla
     }
 
     @Override

@@ -9,89 +9,154 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
+// Pantalla del "How to play"
 public class ScreenTutorial implements Screen {
     private final GameLluviaMenu game;
-    private SpriteBatch batch;	   
+    private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
     
     private Texture buttonBack;
+    private Texture buttonPagSiguiente;
+    private Texture buttonPagAnterior;
+    
     private Texture player;
+    private Texture teclaA;
+    private Texture teclaD;
+    private Texture flechaDer;
+    private Texture flechaIzq;
+    
     private Texture drop;
     private Texture dropBad;
     private Texture dropHeal;
     private Texture dropSuper;
+    private Texture dropZap;
+    
+    private int currentPage = 1;  // Variable para controlar la página actual
 
     public ScreenTutorial(final GameLluviaMenu game) {
         this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
         camera = new OrthographicCamera();
-        //camera.setToOrtho(false, 800, 480);
         camera.setToOrtho(false, 1920, 1080);
     }
-    
+
     @Override
     public void show() {
-        // Cargar las imágenes de los botones con mipmaps habilitados
-        buttonBack = new Texture(Gdx.files.internal("ButtonBack.png"), true); // Habilitar mipmaps
+        buttonBack = new Texture(Gdx.files.internal("ButtonBack.png"), true);
+        buttonPagSiguiente = new Texture(Gdx.files.internal("ButtonDNext.png"), true);
+        buttonPagAnterior = new Texture(Gdx.files.internal("ButtonABack.png"), true);
+        
+        
         player = new Texture(Gdx.files.internal("bucketDer.png"), true);
+        teclaA = new Texture(Gdx.files.internal("TeclaA.png"), true);
+        flechaIzq = new Texture(Gdx.files.internal("TeclaFlechaIzq.png"), true);
+        teclaD = new Texture(Gdx.files.internal("TeclaD.png"), true);
+        flechaDer = new Texture(Gdx.files.internal("TeclaFlechaDer.png"), true);             
+        
         drop = new Texture(Gdx.files.internal("drop.png"), true);
         dropBad = new Texture(Gdx.files.internal("dropBad.png"), true);
         dropHeal = new Texture(Gdx.files.internal("dropHeal.png"), true);
         dropSuper = new Texture(Gdx.files.internal("dropSuper.png"), true);
-        
-        // Aplicar filtrado trilineal
+        dropZap = new Texture(Gdx.files.internal("dropZap.png"), true);
+
         buttonBack.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        buttonPagSiguiente.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        buttonPagAnterior.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        
         player.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        teclaA.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        flechaIzq.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        teclaD.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        flechaDer.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        
         drop.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropBad.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropHeal.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropSuper.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        dropZap.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
     }
 
     @Override
     public void render(float delta) {
-    	ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        
+
         batch.begin();
+        font.getData().setScale(2, 2);
+        batch.draw(buttonBack, 5, 1080 - 85, 200, 80);
+
+        // Dibuja la página 1 del tutorial
+        if (currentPage == 1) {
+        	batch.draw(buttonPagSiguiente, 1920-105-10, 1080/2 - 43, 105, 71);
+        	font.draw(batch, "1 / 2", 1920-80, 30);
+        	
+        	batch.draw(player, 1920/2 - 183, 1080 - 400, 366, 224);	
+            font.draw(batch, "Este eres tu, al inicio de cada partida contarás con 3 vidas.\n"
+                    + "Solo podrás moverte horizontalmente para cumplir tu propósito.", 550, 1080 - 450);
+            
+            font.draw(batch, "Para moverte a la izquierda", 450, 1080 - 580);
+            batch.draw(teclaA, 470, 1080-480-250, 100, 100);
+            font.draw(batch, "///", 620, 1080-480-190);
+            batch.draw(flechaIzq, 690, 1080-480-250, 100, 100);                        
+            
+            font.draw(batch, "Para moverte a la derecha", 1130, 1080 - 580);
+            batch.draw(teclaD, 1150, 1080-480-250, 100, 100);
+            font.draw(batch, "///", 1300, 1080-480-190);
+            batch.draw(flechaDer, 1370, 1080-480-250, 100, 100);  
+            
+            font.draw(batch, "Tu propósito será atrapar distintos tipos de orbes, cada uno con su respectivo efecto sobre el jugador. "
+            		+ "Ciertos orbes otorgarán puntuación al \njugador, y tu deber será acumular la mayor cantidad de puntos en un tiempo "
+            		+ "definido. Si pierdes todas tus vidas la partida terminará \nabruptamente, pero si sobrevives el tiempo que dure "
+            		+ "el nivel (independiente de tu puntaje) completarás el nivel. ¡Éxito!", 50, 1080 - 850);
+  
+        } 
         
-        // Dibujar textos
-        font.getData().setScale(2,2);
-        
-        batch.draw(buttonBack, 5, 1080-85, 200,80);
-        
-        // Imágenes de los elementos del juego y sus instrucciones
-        batch.draw(player, 30, 1080-250, 183,112);
-        font.draw(batch, "Este eres tu, dispones de 3 vidas y debes recoger los distintos orbes en pantalla\n"
-        		+ "para acumular puntos. ¡Cuidado con lo que agarras!", 250, 1080-170);
-        
-        batch.draw(drop, 70, 1080-400, 100,100);
-        font.draw(batch, "El orbe más básico y tu principal alternativa para aumentar tu puntaje.", 250, 1080-100-230);
-        
-        batch.draw(dropBad, 70, 1080-550, 100,100);
-        font.draw(batch, "Tu mayor enemigo, cuidado con tomar una de estas,\n"
-        		+ "¡Perderás una vida y parte de tus puntos!", 250, 1080-100-380);
-        
-        batch.draw(dropHeal, 70, 1080-700, 100,100);
-        font.draw(batch, "Un orbe que no solo otorga puntos, si no que recupera una vida perdida.\n"
-        		+ "No se pueden tener más de 3 vidas.", 250, 1080-100-530);
-        
-        batch.draw(dropSuper, 70, 1080-850, 100,100);
-        font.draw(batch, "Un orbe con gran poder que otorga una cantidad considerable de puntos.\n"
-        		+ "¡Recoge cuantas puedas!", 250, 1080-100-680);
-        
-        font.draw(batch, "Tu propósito será atrapar orbes para poder hacerte con el mayor puntaje posible.\n"
-        		+ "Dispondrás de una cantidad de tiempo definida y solo 3 vidas para jugar. ¡Éxito!", 30, 1080-100-830);
-        
+        // Dibuja la página 2 del tutorial
+        else if (currentPage == 2) {
+        	batch.draw(buttonPagAnterior, 10, 1080/2 - 43, 105, 71);
+        	font.draw(batch, "2 / 2", 1920-80, 30);
+        	
+        	//Primera fila de elementos
+        	batch.draw(drop, 130, 1080 - 250, 100, 100);
+            font.draw(batch, "El orbe más básico y tu principal fuente \npara aumentar tu puntuación.", 240, 1080-250+80);
+            
+            batch.draw(dropSuper, 1050, 1080 - 250, 100, 100);
+            font.draw(batch, "Un orbe con gran poder que otorga una \ncantidad considerable de puntos.\n¡Recoge cuantas puedas!", 1160, 1080-250+95); 
+            
+            //Segunda fila de elementos
+            batch.draw(dropBad, 130, 1080-450, 100, 100);
+            font.draw(batch, "Un orbe peligroso, ten cuidado con tomar \nuna de estas, ¡perderás una vida y puntos!", 240, 1080-450+80);
+        	
+            //Tercera fila de elementos
+            batch.draw(dropHeal, 130, 1080-650, 100, 100);
+            font.draw(batch, "Un orbe que otorga pocos puntos, pero \nque recupera una de las vidas perdidas.\n"
+            		+ "No se pueden tener más de 3 vidas.", 240, 1080-650+90);
+            
+            //Cuarta fila de elementos
+            batch.draw(dropZap, 130, 1080-850, 100, 100);
+            font.draw(batch, "Un orbe que otorga pocos puntos, pero \n"
+            		+ "otorga un buff de velocidad de movimiento \n"
+            		+ "al jugador. Se puede acumular pero si \nrecibes daño perderás todo el bono.", 240, 1080-850+105);
+            
+        }
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                game.setScreen(new ScreenMainMenu(game));  // Volver al menú principal
-                dispose();  // Liberar recursos
-            };
+        // Cambio de páginas
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            if (currentPage == 1) {
+                currentPage = 2;  // Cambia a la segunda página
+            }
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            if (currentPage == 2) {
+                currentPage = 1;  // Regresa a la primera página
+            }
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new ScreenMainMenu(game));  // Volver al menú principal
+            dispose();
+        }
     }
 
     @Override
@@ -112,11 +177,18 @@ public class ScreenTutorial implements Screen {
 
     @Override
     public void dispose() {
-    	buttonBack.dispose();
+        buttonBack.dispose();
+        buttonPagAnterior.dispose();
+        buttonPagSiguiente.dispose();
         player.dispose();
         drop.dispose();
         dropBad.dispose();
         dropHeal.dispose();
         dropSuper.dispose();
+        dropZap.dispose();
+        teclaA.dispose();
+        flechaIzq.dispose();
+        teclaD.dispose();
+        flechaDer.dispose();
     }
 }
