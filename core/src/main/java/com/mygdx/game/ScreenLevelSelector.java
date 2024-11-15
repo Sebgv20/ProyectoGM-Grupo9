@@ -20,7 +20,6 @@ public class ScreenLevelSelector implements Screen {
     private Texture lvl1;
     private Texture lvl2;
     private Texture lvl3;
-    private Texture wip;
 
     public ScreenLevelSelector(final GameLluviaMenu game) {
         this.game = game;
@@ -38,7 +37,6 @@ public class ScreenLevelSelector implements Screen {
         lvl1 = new Texture(Gdx.files.internal("ButtonLvl1.png"), true);
         lvl2 = new Texture(Gdx.files.internal("ButtonLvl2.png"), true);
         lvl3 = new Texture(Gdx.files.internal("ButtonLvl3.png"), true);
-        wip = new Texture(Gdx.files.internal("WIP.png"), true);
         
         // Aplicar filtrado trilineal
         buttonBack.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
@@ -63,9 +61,6 @@ public class ScreenLevelSelector implements Screen {
         batch.draw(lvl2, 155+400	+200			, 1080-400-160-20, 400, 160);
         
         batch.draw(lvl3, 155+400+400+200	+200	, 1080-400-160-20-160-20, 400, 160);
-
-        // Icono WIP
-        batch.draw(wip, 155+400+400+200	+200	, 1080-400-160-20-160-20-160, 400, 160);
         
         batch.end();
 
@@ -86,6 +81,12 @@ public class ScreenLevelSelector implements Screen {
                	game.setScreen(new GameScreenLevel2(game));  // Volver al menú principal
                 dispose();  // Liberar recursos
             };
+            
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+        	game.getMenuMusic().stop();
+            game.setScreen(new GameScreenLevel3(game));  // Volver al menú principal
+            dispose();  // Liberar recursos
+        };
     }
 
     @Override
@@ -110,6 +111,5 @@ public class ScreenLevelSelector implements Screen {
         lvl1.dispose();
         lvl2.dispose();
         lvl3.dispose();
-        wip.dispose();
     }
 }

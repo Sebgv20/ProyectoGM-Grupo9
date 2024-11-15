@@ -28,6 +28,7 @@ public class ScreenTutorial implements Screen {
     
     private Texture drop;
     private Texture dropBad;
+    private Texture dropInstaKill;
     private Texture dropHeal;
     private Texture dropSuper;
     private Texture dropZap;
@@ -57,6 +58,7 @@ public class ScreenTutorial implements Screen {
         
         drop = new Texture(Gdx.files.internal("drop.png"), true);
         dropBad = new Texture(Gdx.files.internal("dropBad.png"), true);
+        dropInstaKill = new Texture(Gdx.files.internal("dropInstaKill.png"), true);
         dropHeal = new Texture(Gdx.files.internal("dropHeal.png"), true);
         dropSuper = new Texture(Gdx.files.internal("dropSuper.png"), true);
         dropZap = new Texture(Gdx.files.internal("dropZap.png"), true);
@@ -73,6 +75,7 @@ public class ScreenTutorial implements Screen {
         
         drop.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropBad.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        dropInstaKill.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropHeal.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropSuper.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
         dropZap.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
@@ -129,6 +132,9 @@ public class ScreenTutorial implements Screen {
             //Segunda fila de elementos
             batch.draw(dropBad, 130, 1080-450, 100, 100);
             font.draw(batch, "Un orbe peligroso, ten cuidado con tomar \nuna de estas, ¡perderás una vida y puntos!", 240, 1080-450+80);
+            
+            batch.draw(dropInstaKill, 1050, 1080-450, 100, 100);
+            font.draw(batch, "Un orbe letal, si no estás protegido estás fuera.", 1160, 1080-450+80);
         	
             //Tercera fila de elementos
             batch.draw(dropHeal, 130, 1080-650, 100, 100);

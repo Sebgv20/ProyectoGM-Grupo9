@@ -72,6 +72,13 @@ public class Tarro {
 	      velx = 750;
 	   }
 	   
+	   public void dañarPlus() {
+		   vidas -= vidas;
+		   herido = true;
+		   tiempoHerido = tiempoHeridoMax;
+		   velx = 750;
+	   }
+	   
 	   public void curar() {
 		   vidas++; 
 	   }
