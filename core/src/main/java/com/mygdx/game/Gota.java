@@ -12,12 +12,12 @@ public abstract class Gota {
     
     public Gota(float hitboxSize) {
         this.hitboxSize = hitboxSize;
-        this.textura = definirTextura(); // Cada subclase tendrá su propia textura
+        this.textura = TextureManager.getInstance().getTexture(definirRutaTextura()); // Cada subclase tendrá su propia textura
         this.velocidad = setVelocidad();  // Cada subclase establece su propia velocidad
     }
     
     // Método abstracto para que cada subclase proporcione su textura
-    public abstract Texture definirTextura();    
+    protected abstract String definirRutaTextura();  
     public abstract float setVelocidad();
     public abstract void aplicarEfecto(Tarro tarro);
 
@@ -25,7 +25,7 @@ public abstract class Gota {
     public float getVelocidad() {
         return velocidad;
     }
-    
+       
     // Dibuja la textura, la posición en x e y, y el tamaño será igual al de su hitbox
     public void dibujar(SpriteBatch batch, Rectangle posicion) {
         batch.draw(textura, posicion.x, posicion.y, hitboxSize, hitboxSize);

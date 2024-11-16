@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
-// Pantalla del "How to play"
 public class ScreenTutorial implements Screen {
     private final GameLluviaMenu game;
     private SpriteBatch batch;
@@ -45,40 +44,25 @@ public class ScreenTutorial implements Screen {
 
     @Override
     public void show() {
-        buttonBack = new Texture(Gdx.files.internal("ButtonBack.png"), true);
-        buttonPagSiguiente = new Texture(Gdx.files.internal("ButtonDNext.png"), true);
-        buttonPagAnterior = new Texture(Gdx.files.internal("ButtonABack.png"), true);
+        // Usamos TextureManager para cargar las texturas
+        TextureManager textureManager = TextureManager.getInstance();
         
+        buttonBack = textureManager.getTexture("ButtonBack.png");
+        buttonPagSiguiente = textureManager.getTexture("ButtonDNext.png");
+        buttonPagAnterior = textureManager.getTexture("ButtonABack.png");
         
-        player = new Texture(Gdx.files.internal("bucketDer.png"), true);
-        teclaA = new Texture(Gdx.files.internal("TeclaA.png"), true);
-        flechaIzq = new Texture(Gdx.files.internal("TeclaFlechaIzq.png"), true);
-        teclaD = new Texture(Gdx.files.internal("TeclaD.png"), true);
-        flechaDer = new Texture(Gdx.files.internal("TeclaFlechaDer.png"), true);             
+        player = textureManager.getTexture("bucketDer.png");
+        teclaA = textureManager.getTexture("TeclaA.png");
+        flechaIzq = textureManager.getTexture("TeclaFlechaIzq.png");
+        teclaD = textureManager.getTexture("TeclaD.png");
+        flechaDer = textureManager.getTexture("TeclaFlechaDer.png");
         
-        drop = new Texture(Gdx.files.internal("drop.png"), true);
-        dropBad = new Texture(Gdx.files.internal("dropBad.png"), true);
-        dropInstaKill = new Texture(Gdx.files.internal("dropInstaKill.png"), true);
-        dropHeal = new Texture(Gdx.files.internal("dropHeal.png"), true);
-        dropSuper = new Texture(Gdx.files.internal("dropSuper.png"), true);
-        dropZap = new Texture(Gdx.files.internal("dropZap.png"), true);
-
-        buttonBack.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        buttonPagSiguiente.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        buttonPagAnterior.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        
-        player.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        teclaA.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        flechaIzq.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        teclaD.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        flechaDer.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        
-        drop.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        dropBad.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        dropInstaKill.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        dropHeal.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        dropSuper.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
-        dropZap.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.Linear);
+        drop = textureManager.getTexture("drop.png");
+        dropBad = textureManager.getTexture("dropBad.png");
+        dropInstaKill = textureManager.getTexture("dropInstaKill.png");
+        dropHeal = textureManager.getTexture("dropHeal.png");
+        dropSuper = textureManager.getTexture("dropSuper.png");
+        dropZap = textureManager.getTexture("dropZap.png");
     }
 
     @Override
@@ -93,10 +77,10 @@ public class ScreenTutorial implements Screen {
 
         // Dibuja la página 1 del tutorial
         if (currentPage == 1) {
-        	batch.draw(buttonPagSiguiente, 1920-105-10, 1080/2 - 43, 105, 71);
-        	font.draw(batch, "1 / 2", 1920-80, 30);
-        	
-        	batch.draw(player, 1920/2 - 183, 1080 - 400, 366, 224);	
+            batch.draw(buttonPagSiguiente, 1920-105-10, 1080/2 - 43, 105, 71);
+            font.draw(batch, "1 / 2", 1920-80, 30);
+            
+            batch.draw(player, 1920/2 - 183, 1080 - 400, 366, 224);    
             font.draw(batch, "Este eres tu, al inicio de cada partida contarás con 3 vidas.\n"
                     + "Solo podrás moverte horizontalmente para cumplir tu propósito.", 550, 1080 - 450);
             
@@ -114,16 +98,15 @@ public class ScreenTutorial implements Screen {
             		+ "Ciertos orbes otorgarán puntuación al \njugador, y tu deber será acumular la mayor cantidad de puntos en un tiempo "
             		+ "definido. Si pierdes todas tus vidas la partida terminará \nabruptamente, pero si sobrevives el tiempo que dure "
             		+ "el nivel (independiente de tu puntaje) completarás el nivel. ¡Éxito!", 50, 1080 - 850);
-  
         } 
         
         // Dibuja la página 2 del tutorial
         else if (currentPage == 2) {
-        	batch.draw(buttonPagAnterior, 10, 1080/2 - 43, 105, 71);
-        	font.draw(batch, "2 / 2", 1920-80, 30);
-        	
-        	//Primera fila de elementos
-        	batch.draw(drop, 130, 1080 - 250, 100, 100);
+            batch.draw(buttonPagAnterior, 10, 1080/2 - 43, 105, 71);
+            font.draw(batch, "2 / 2", 1920-80, 30);
+            
+            //Primera fila de elementos
+            batch.draw(drop, 130, 1080 - 250, 100, 100);
             font.draw(batch, "El orbe más básico y tu principal fuente \npara aumentar tu puntuación.", 240, 1080-250+80);
             
             batch.draw(dropSuper, 1050, 1080 - 250, 100, 100);
@@ -135,7 +118,7 @@ public class ScreenTutorial implements Screen {
             
             batch.draw(dropInstaKill, 1050, 1080-450, 100, 100);
             font.draw(batch, "Un orbe letal, si no estás protegido estás fuera.", 1160, 1080-450+80);
-        	
+            
             //Tercera fila de elementos
             batch.draw(dropHeal, 130, 1080-650, 100, 100);
             font.draw(batch, "Un orbe que otorga pocos puntos, pero \nque recupera una de las vidas perdidas.\n"
@@ -144,9 +127,7 @@ public class ScreenTutorial implements Screen {
             //Cuarta fila de elementos
             batch.draw(dropZap, 130, 1080-850, 100, 100);
             font.draw(batch, "Un orbe que otorga pocos puntos, pero \n"
-            		+ "otorga un buff de velocidad de movimiento \n"
-            		+ "al jugador. Se puede acumular pero si \nrecibes daño perderás todo el bono.", 240, 1080-850+105);
-            
+            		+ "otorga un buff de velocidad de movimiento \nal jugador. Se puede acumular pero si \nrecibes daño perderás todo el bono.", 240, 1080-850+105);
         }
         batch.end();
 
@@ -183,18 +164,5 @@ public class ScreenTutorial implements Screen {
 
     @Override
     public void dispose() {
-        buttonBack.dispose();
-        buttonPagAnterior.dispose();
-        buttonPagSiguiente.dispose();
-        player.dispose();
-        drop.dispose();
-        dropBad.dispose();
-        dropHeal.dispose();
-        dropSuper.dispose();
-        dropZap.dispose();
-        teclaA.dispose();
-        flechaIzq.dispose();
-        teclaD.dispose();
-        flechaDer.dispose();
     }
 }
