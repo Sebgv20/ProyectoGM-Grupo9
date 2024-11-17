@@ -117,7 +117,7 @@ public class ScreenTutorial implements Screen {
             font.draw(batch, "Un orbe peligroso, ten cuidado con tomar \nuna de estas, ¡perderás una vida y puntos!", 240, 1080-450+80);
             
             batch.draw(dropInstaKill, 1050, 1080-450, 100, 100);
-            font.draw(batch, "Un orbe letal, si no estás protegido estás fuera.", 1160, 1080-450+80);
+            font.draw(batch, "Un orbe letal, si lo tocas estás fuera.", 1160, 1080-450+80);
             
             //Tercera fila de elementos
             batch.draw(dropHeal, 130, 1080-650, 100, 100);
