@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -88,6 +89,16 @@ public class GameScreenLevel3 implements Screen, GameLevel {
         batch.begin();
         font.draw(batch, "Puntuación: " + tarro.getPuntos(), 10, 1080 - 10);
         font.draw(batch, "Vidas : " + tarro.getVidas(), 1920 - 130, 1080 - 10);
+        if(tarro.isInvulnerable()) {
+        	font.setColor(new Color(0, 0, 1, 1)); // Azul puro
+        	font.draw(batch, "Invulerable", 1920 - 140, 1080 - 40);
+        	font.setColor(new Color(1, 1, 1, 1)); // Blanco
+        }
+        if(tarro.isVeloz()) {
+        	font.setColor(new Color(1, 1, 0, 1)); // Amarillo
+        	font.draw(batch, "Veloz", 1920 - 115, 1080 - 80);
+        	font.setColor(new Color(1, 1, 1, 1)); // Blanco
+        }
         font.draw(batch, "Tiempo: " + (int) tiempoRestante, 960 - 50, 1080 - 10);
         batch.end();
         update(delta);

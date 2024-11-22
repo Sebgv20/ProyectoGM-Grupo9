@@ -46,9 +46,9 @@ public class LluviaLevel2 implements ILluvia {
         // gotaHeal tiene el último 5%
 
         if (tiempoRestante <= 30 && tiempoRestante > 15 ) { // Cambia la probabilidad a partir de 30 segundos
-        	probabilidadGotaBuena = 0.45f;  // 45%
-            probabilidadGotaMala = 0.40f;   // 40%
-            probabilidadGotaSuper = 0.07f;  // 5%
+        	probabilidadGotaBuena = 0.45f;   // 45%
+            probabilidadGotaMala = 0.40f;    // 40%
+            probabilidadGotaSuper = 0.07f;   // 5%
             probabilidadGotaZap = 0.06f;     // 6%
             // gotaHeal tiene el último 2%
         }

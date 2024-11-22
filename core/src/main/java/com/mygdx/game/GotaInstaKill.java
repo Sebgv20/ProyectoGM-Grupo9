@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 // Gota estándar del juego
 public class GotaInstaKill extends Gota {
 	private Sound FinaldropSound = Gdx.audio.newSound(Gdx.files.internal("FinalHurt.ogg"));
+	private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("hurt.mp3"));
 
     public GotaInstaKill(float hitboxSize) {
         super(hitboxSize);
@@ -19,8 +20,12 @@ public class GotaInstaKill extends Gota {
 
     @Override
     public void aplicarEfecto(Tarro tarro) {
-        tarro.dañarPlus();
-        FinaldropSound.play();
+    	if(!tarro.isInvulnerable()) {
+    		FinaldropSound.play();
+    	} else {
+    		dropSound.play();
+    	}
+    	tarro.dañarPlus();   
         if(tarro.getPuntos() <= 500) {
         	tarro.restarPuntos(tarro.getPuntos());
         }

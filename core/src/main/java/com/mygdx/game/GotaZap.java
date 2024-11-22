@@ -18,8 +18,9 @@ public class GotaZap extends Gota {
     
     @Override
     public void aplicarEfecto(Tarro tarro) {
-    	tarro.setVelocidad(tarro.getVelocidad()*1.2f); // Es acumulable
-    	tarro.sumarPuntos(5);
+        // Aplica un efecto de velocidad por 5 segundos
+        tarro.agregarEfecto(new EfectoVelocidadTemporal(5, 1.3f)); // +30% de velocidad y dura 5 segundos
+        tarro.sumarPuntos(5);
         dropSound.play();
     }
     
