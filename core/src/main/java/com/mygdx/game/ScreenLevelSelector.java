@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -68,23 +69,64 @@ public class ScreenLevelSelector implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new ScreenMainMenu(game));  // Volver al menú principal
             dispose();  // Liberar recursos
-        };
+        }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-        		game.getMenuMusic().stop();
-                game.setScreen(new GameScreenLevel1(game));  // Volver al menú principal
-                dispose();  // Liberar recursos
-            };
+            game.getMenuMusic().stop();
+
+            // Crear la música para la lluvia
+            Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
+
+            // Crear la pantalla usando el Builder
+            GameScreenLevel1Builder builder = new GameScreenLevel1Builder(game);
+            GameScreenLevel1 gameScreen = builder
+                .setRainMusic(rainMusic)
+                .setBucketTextures(new Texture(Gdx.files.internal("bucketIzq.png")),
+                                   new Texture(Gdx.files.internal("bucketDer.png")))
+                .setLluvia(new LluviaLevel1(rainMusic))
+                .setTiempoRestante(46)  // Asumiendo que 46 es el tiempo restante para el nivel 1
+                .build();
+
+            game.setScreen(gameScreen);  // Cambiar a la pantalla del nivel 1
+            dispose();  // Liberar recursos
+        }
             
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-        		game.getMenuMusic().stop();
-               	game.setScreen(new GameScreenLevel2(game));  // Volver al menú principal
-                dispose();  // Liberar recursos
-            };
+            game.getMenuMusic().stop();
+
+            // Crear la música para la lluvia en nivel 2
+         // Crear la música para la lluvia
+            Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
+
+            // Crear la pantalla usando el Builder
+            GameScreenLevel2Builder builder = new GameScreenLevel2Builder(game);
+            GameScreenLevel2 gameScreen = builder
+                .setRainMusic(rainMusic)
+                .setBucketTextures(new Texture(Gdx.files.internal("bucketIzq.png")),
+                                   new Texture(Gdx.files.internal("bucketDer.png")))
+                .setLluvia(new LluviaLevel2(rainMusic))
+                .setTiempoRestante(50)  
+                .build();
+
+            game.setScreen(gameScreen);  
+            dispose();  // Liberar recursos
+        }
             
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
         	game.getMenuMusic().stop();
-            game.setScreen(new GameScreenLevel3(game));  // Volver al menú principal
+            Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
+
+            // Crear la pantalla usando el Builder
+            GameScreenLevel3Builder builder = new GameScreenLevel3Builder(game);
+            GameScreenLevel3 gameScreen = builder
+                .setRainMusic(rainMusic)
+                .setBucketTextures(new Texture(Gdx.files.internal("bucketIzq.png")),
+                                   new Texture(Gdx.files.internal("bucketDer.png")))
+                .setLluvia(new LluviaLevel3(rainMusic))
+                .setTiempoRestante(60)  
+                .build();
+
+            game.setScreen(gameScreen);  
             dispose();  // Liberar recursos
         };
     }

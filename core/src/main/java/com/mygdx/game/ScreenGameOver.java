@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
 
 // Pantalla para el gameOver
@@ -20,7 +19,6 @@ public class ScreenGameOver implements Screen {
     private String razonFinJuego;
     private boolean muerte;
 
-    private Texture wip;
     private Music gameOverMusic;  // Música para cuando se termina el juego por morir
     private Music gameFinishMusic;  // Música para cuando se sobrevive hasta el final
 
@@ -37,8 +35,6 @@ public class ScreenGameOver implements Screen {
 
     @Override
     public void show() {
-        wip = new Texture(Gdx.files.internal("WIP.png"));
-        
         // Cargar y reproducir la música de Game Over
         gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal("GameOverMusic.mp3"));
         gameFinishMusic = Gdx.audio.newMusic(Gdx.files.internal("GameFinishMusic.mp3"));
@@ -60,9 +56,7 @@ public class ScreenGameOver implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         
-        batch.begin();
-        batch.draw(wip, 20, 1080 - 180, 400, 160);
-        
+        batch.begin();       
         font.draw(batch, "GAME OVER:", 1920/2 - 230, 1080/2 + 100);
         font.draw(batch, razonFinJuego, 1920/2 - 30, 1080/2 +100);
         font.draw(batch, "Tu puntuación fue de: " + puntuacionFinal, 1920/2 - 230, 1080/2);
@@ -97,7 +91,6 @@ public class ScreenGameOver implements Screen {
 
     @Override
     public void dispose() {
-        wip.dispose();
         gameOverMusic.dispose();  // Liberar los recursos de la música
         gameFinishMusic.dispose();  // Liberar los recursos de la música
     }

@@ -31,17 +31,35 @@ public class GameScreenLevel3 implements Screen, GameLevel {
         this.isGameOver = false;
     }
 
+    public void setBucketLeftImage(Texture bucketLeftImage) {
+        this.bucketLeftImage = bucketLeftImage;
+    }
+
+    public void setBucketRightImage(Texture bucketRightImage) {
+        this.bucketRightImage = bucketRightImage;
+    }
+
+    public void setTarro(Tarro tarro) {
+        this.tarro = tarro;
+    }
+
+    public void setLluvia(ILluvia lluvia) {
+        this.lluvia = (LluviaLevel3) lluvia;
+    }
+
+    public void setRainMusic(Music rainMusic) {
+        this.rainMusic = rainMusic;
+    }
+
+    public void setTiempoRestante(float tiempoRestante) {
+        this.tiempoRestante = tiempoRestante;
+    }
+
     @Override
     public void initialize() {
         font = new BitmapFont();
         font.getData().setScale(2.0f);
-        tiempoRestante = 46; // Duración de la partida
         temporizadorActivo = true;
-        bucketLeftImage = new Texture(Gdx.files.internal("bucketIzq.png"));
-        bucketRightImage = new Texture(Gdx.files.internal("bucketDer.png"));
-        tarro = new Tarro(bucketLeftImage, bucketRightImage);
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("GameMusic.mp3"));
-        lluvia = new LluviaLevel3(rainMusic);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         batch = new SpriteBatch();
@@ -149,6 +167,8 @@ public class GameScreenLevel3 implements Screen, GameLevel {
         font.dispose();
         rainMusic.dispose();
         shapeRenderer.dispose();
+        bucketLeftImage.dispose();
+        bucketRightImage.dispose();
     }
     @Override
     public float getTiempoRestante() {

@@ -20,11 +20,13 @@ public class GotaMala extends Gota {
 
     @Override
     public void aplicarEfecto(Tarro tarro) {
-        tarro.dañar();
-        if (tarro.getVidas() >= 1) {
-        	dropSound.play();
-        } else {
-        	FinaldropSound.play();
+        if (!tarro.isInvulnerable()) {
+        	tarro.dañar();
+        	if (tarro.getVidas() >= 1) {
+            	dropSound.play();
+            } else {
+            	FinaldropSound.play();
+            }
         }
 
         if (tarro.getPuntos() <= 50) {

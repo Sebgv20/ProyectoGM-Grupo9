@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 
 // Gota que otorga invulnerabilidad temporal al jugador
 public class GotaInvulnerable extends Gota {
-    private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropHealSound.mp3"));
+    private Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("dropShieldSound.mp3"));
 
     public GotaInvulnerable(float hitboxSize) {
         super(hitboxSize);

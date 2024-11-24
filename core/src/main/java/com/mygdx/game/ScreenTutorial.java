@@ -20,6 +20,9 @@ public class ScreenTutorial implements Screen {
     private Texture buttonPagAnterior;
     
     private Texture player;
+    private Texture playerVel;
+    private Texture playerShield;
+    private Texture playerMix;
     private Texture teclaA;
     private Texture teclaD;
     private Texture flechaDer;
@@ -31,6 +34,7 @@ public class ScreenTutorial implements Screen {
     private Texture dropHeal;
     private Texture dropSuper;
     private Texture dropZap;
+    private Texture dropShield;
     
     private int currentPage = 1;  // Variable para controlar la página actual
 
@@ -52,6 +56,10 @@ public class ScreenTutorial implements Screen {
         buttonPagAnterior = textureManager.getTexture("ButtonABack.png");
         
         player = textureManager.getTexture("bucketDer.png");
+        playerVel = textureManager.getTexture("bucketDerVeloz.png");
+        playerShield = textureManager.getTexture("bucketDerEscudado.png");
+        playerMix = textureManager.getTexture("bucketDerMixto.png");
+        
         teclaA = textureManager.getTexture("TeclaA.png");
         flechaIzq = textureManager.getTexture("TeclaFlechaIzq.png");
         teclaD = textureManager.getTexture("TeclaD.png");
@@ -63,6 +71,7 @@ public class ScreenTutorial implements Screen {
         dropHeal = textureManager.getTexture("dropHeal.png");
         dropSuper = textureManager.getTexture("dropSuper.png");
         dropZap = textureManager.getTexture("dropZap.png");
+        dropShield = textureManager.getTexture("dropShield.png");
     }
 
     @Override
@@ -78,7 +87,7 @@ public class ScreenTutorial implements Screen {
         // Dibuja la página 1 del tutorial
         if (currentPage == 1) {
             batch.draw(buttonPagSiguiente, 1920-105-10, 1080/2 - 43, 105, 71);
-            font.draw(batch, "1 / 2", 1920-80, 30);
+            font.draw(batch, "1 / 3", 1920-80, 30);
             
             batch.draw(player, 1920/2 - 183, 1080 - 400, 366, 224);    
             font.draw(batch, "Este eres tu, al inicio de cada partida contarás con 3 vidas.\n"
@@ -103,7 +112,8 @@ public class ScreenTutorial implements Screen {
         // Dibuja la página 2 del tutorial
         else if (currentPage == 2) {
             batch.draw(buttonPagAnterior, 10, 1080/2 - 43, 105, 71);
-            font.draw(batch, "2 / 2", 1920-80, 30);
+            batch.draw(buttonPagSiguiente, 1920-105-10, 1080/2 - 43, 105, 71);
+            font.draw(batch, "2 / 3", 1920-80, 30);
             
             //Primera fila de elementos
             batch.draw(drop, 130, 1080 - 250, 100, 100);
@@ -117,17 +127,53 @@ public class ScreenTutorial implements Screen {
             font.draw(batch, "Un orbe peligroso, ten cuidado con tomar \nuna de estas, ¡perderás una vida y puntos!", 240, 1080-450+80);
             
             batch.draw(dropInstaKill, 1050, 1080-450, 100, 100);
-            font.draw(batch, "Un orbe letal, si lo tocas estás fuera.", 1160, 1080-450+80);
+            font.draw(batch, "Un orbe letal, si lo tocas desprotegido\n"
+            		+ "estás fuera.", 1160, 1080-450+80);
             
             //Tercera fila de elementos
             batch.draw(dropHeal, 130, 1080-650, 100, 100);
             font.draw(batch, "Un orbe que otorga pocos puntos, pero \nque recupera una de las vidas perdidas.\n"
             		+ "No se pueden tener más de 3 vidas.", 240, 1080-650+90);
+
+            batch.draw(dropShield, 1050, 1080-650, 100, 100);
+            font.draw(batch, "Un orbe que otorga un buff de escudo de\n"
+            		+ "invulnerabilidad, si tocas una gota dañina\n"
+            		+ "perderás el escudo.", 1160, 1080-650+90);
             
             //Cuarta fila de elementos
             batch.draw(dropZap, 130, 1080-850, 100, 100);
-            font.draw(batch, "Un orbe que otorga pocos puntos, pero \n"
-            		+ "otorga un buff de velocidad de movimiento \nal jugador. Se puede acumular pero si \nrecibes daño perderás todo el bono.", 240, 1080-850+105);
+            font.draw(batch, "Un orbe que otorga pocos puntos y\n"
+            		+ "otorga un buff de velocidad de movimiento\n"
+            		+ "al jugador. Se puede acumular pero si\n"
+            		+ "recibes daño perderás todo el bono.", 240, 1080-850+105);
+        }
+        
+     // Dibuja la página 2 del tutorial
+        else if (currentPage == 3) {
+            batch.draw(buttonPagAnterior, 10, 1080/2 - 43, 105, 71);
+            font.draw(batch, "3 / 3", 1920-80, 30);
+            
+            //Primera fila de elementos
+            batch.draw(player, 130, 1080 - 350, 183, 112);
+            font.draw(batch, "El estado base del jugador, sin ninguna modificación\n"
+            		+ "ni buff.", 140, 1080-450+80);
+            
+            batch.draw(playerVel, 1050, 1080 - 350, 183, 112);
+            font.draw(batch, "Mientras el jugador sea amarillo tendrá velocidad\n"
+            		+ "de movimiento aumentada. La velocidad se acumula\n"
+            		+ "pero no la duración del buff.", 1060, 1080-450+80); 
+            
+            //Segunda fila de elementos
+            batch.draw(playerShield, 130, 1080-750, 183, 112);
+            font.draw(batch, "Mientras el jugador sea azul, será invulnerable a las\n"
+            		+ "gotas rojas. Si toca una gota morada perderá el buff\n"
+            		+ "y una sola vida en lugar de todas. Si cuentas con una\n"
+            		+ "sola vida mientras estés escudado no morirás.", 140, 1080-850+80);
+            
+            batch.draw(playerMix, 1050, 1080-750, 183, 112);
+            font.draw(batch, "Mientras el jugador sea de color verde, significa que\n"
+            		+ "cuentas con ambos buffos (velocidad y escudo)\n"
+            		+ "simultáneamente.", 1060, 1080-850+80);
         }
         batch.end();
 
@@ -136,9 +182,14 @@ public class ScreenTutorial implements Screen {
             if (currentPage == 1) {
                 currentPage = 2;  // Cambia a la segunda página
             }
+            else if (currentPage == 2) {
+                currentPage = 3;  // Cambia a la segunda página
+            }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             if (currentPage == 2) {
                 currentPage = 1;  // Regresa a la primera página
+            } else if (currentPage == 3) {
+                currentPage = 2;  // Regresa a la primera página
             }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new ScreenMainMenu(game));  // Volver al menú principal
