@@ -113,16 +113,21 @@ public class LluviaLevel3 implements ILluvia {
             Rectangle raindrop = rainDropsPos.get(i);
             Gota gota = rainDrops.get(i);
 
+            // Actualizar posición
             raindrop.y -= gota.getVelocidad() * multiplicadorVelocidad * Gdx.graphics.getDeltaTime();
 
+            // Eliminar gotas fuera de pantalla
             if (raindrop.y + 64 < 0) {
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
                 continue;
             }
 
+            // Usar el Template Method para procesar colisión y efecto
+            gota.procesarGota(raindrop, tarro);
+
+            // Si la gota se recolectó, eliminarla
             if (raindrop.overlaps(tarro.getArea())) {
-                gota.aplicarEfecto(tarro);
                 rainDropsPos.removeIndex(i);
                 rainDrops.removeIndex(i);
             }

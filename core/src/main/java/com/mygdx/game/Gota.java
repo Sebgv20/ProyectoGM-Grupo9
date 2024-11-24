@@ -25,6 +25,14 @@ public abstract class Gota {
     public float getVelocidad() {
         return velocidad;
     }
+    
+    // Template Method
+    // Template Method sin SpriteBatch
+    public final void procesarGota(Rectangle posicion, Tarro tarro) {
+        if (posicion.overlaps(tarro.getArea())) { // Lógica genérica de colisión
+            aplicarEfecto(tarro); // Personalizable
+        }
+    }
        
     // Dibuja la textura, la posición en x e y, y el tamaño será igual al de su hitbox
     public void dibujar(SpriteBatch batch, Rectangle posicion) {
